@@ -24,12 +24,14 @@ class LogInViewController: UIViewController {
     }
 
     @IBAction func logInPressed(_ sender: AnyObject) {
-        
         SVProgressHUD.show()
-        
         Auth.auth().signIn(withEmail: emailTextfield.text!, password: passwordTextfield.text!) { (user, error) in
             if error != nil {
+                let alert = UIAlertController(title: "Error:", message: error!.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                self.present(alert, animated: true)
                 print("Error: \(error!)")
+                SVProgressHUD.dismiss()
             } else {
                 print("Login successful")
                 SVProgressHUD.dismiss()
